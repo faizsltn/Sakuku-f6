@@ -46,3 +46,9 @@ app.get('/delete/:id', (req, res) => {
 });
 
 app.listen(3000, () => console.log('Server Sakuku Running on Port 3000 [cite: 75]'));
+
+// Memanggil file route yang baru saja diperbaiki
+const indexRouter = require('./routes/index');
+
+// Menggunakan route tersebut untuk halaman utama
+app.use('/', indexRouter);
