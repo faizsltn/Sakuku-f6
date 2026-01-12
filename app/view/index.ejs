@@ -1,11 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Project Tekser</title>
-  </head>
-  <body>
-    <h1>Hello World! Silakan edit file ini.</h1>
-  </body>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakuku - Catatan Keuangan Kelompok F6</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <h1 class="text-center mb-4">💰 Sakuku F6</h1>
+        
+        <div class="card shadow-sm mb-5">
+            <div class="card-body">
+                <h5 class="card-title">Tambah Pengeluaran Baru</h5>
+                <form action="/add" method="POST" class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Nominal</label>
+                        <input type="number" name="nominal" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Kategori</label>
+                        <input type="text" name="nama_kategori" class="form-control" placeholder="Misal: Makan" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Tanggal</label>
+                        <input type="date" name="tanggal" class="form-control" required>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label">Keterangan</label>
+                        <input type="text" name="keterangan" class="form-control">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Metode Pembayaran</label>
+                        <select name="metode_pembayaran" class="form-select">
+                            <option value="Cash">Cash</option>
+                            <option value="Bank/Transfer">Bank/Transfer</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary w-100">Simpan Transaksi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-hover bg-white rounded shadow-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Kategori</th>
+                        <th>Nominal</th>
+                        <th>Metode</th>
+                        <th>Keterangan</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% data.forEach(item => { %>
+                    <tr>
+                        <td><%= item.tanggal %></td>
+                        <td><span class="badge bg-info text-dark"><%= item.nama_kategori %></span></td>
+                        <td>Rp <%= item.nominal %></td>
+                        <td><%= item.metode_pembayaran %></td>
+                        <td><%= item.keterangan %></td>
+                        <td>
+                            <a href="/delete/<%= item.PengeluaraID %>" class="btn btn-sm btn-danger">Hapus</a>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
 </html>

@@ -45,3 +45,26 @@ services:
 
 #--- VOLUMES AND NETWORKS ---
 # tambahkan bagian volumes dan networks di sini
+
+version: '3.8'
+services:
+  app:
+    build: ./app
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=sakuku_db
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - [cite_start]mysql_data:/var/lib/mysql # Agar data TIDAK HILANG [cite: 15]
+
+volumes:
+  mysql_data:
