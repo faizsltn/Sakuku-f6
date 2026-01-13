@@ -4,7 +4,7 @@ services:
   # --- 1. DATABASE SERVICE ---
   db_service:
     image: mysql:8.0
-    container_name: db_${GROUP_NAME}
+    container_name: db_F6
     restart: always
     environment:
       MYSQL_DATABASE: ${DB_NAME}
@@ -12,7 +12,12 @@ services:
       MYSQL_PASSWORD: ${DB_PASS}
       MYSQL_ROOT_PASSWORD: rootpassword
     # volumes
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     # Network
+    networks:
+      - sakuku_net
 
   # --- 2. APP SERVICE ---
   app_service:
@@ -30,6 +35,8 @@ services:
     depends_on:
       - db_service
     # Network
+    networks:
+      - sakuku_net
 
   # --- 3. NGINX SERVICE ---
   nginx_service:
@@ -37,34 +44,19 @@ services:
     container_name: nginx_${GROUP_NAME}
     restart: always
     ports:
-      - "${APP_PORT}:80"
+      - "2586:80"
     depends_on:
       - app_service
     # Network
+    networks:
+      - sakuku_net
     # volumes
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
 
 #--- VOLUMES AND NETWORKS ---
-# tambahkan bagian volumes dan networks di sini
-
-version: '3.8'
-services:
-  app:
-    build: ./app
-    ports:
-      - "3000:3000"
-    environment:
-      - DB_PASSWORD=${DB_PASSWORD}
-    depends_on:
-      - db
-
-  db:
-    image: mysql:8.0
-    environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=sakuku_db
-    volumes:
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - [cite_start]mysql_data:/var/lib/mysql # Agar data TIDAK HILANG [cite: 15]
-
 volumes:
-  mysql_data:
+  db_data:
+
+networks:
+  sakuku_net:
