@@ -3,151 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sakuku - Visionary F6</title>
+    <title>Sakuku - Kelompok F6</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-dark: #0f172a;
-            --accent-gold: #fbbf24;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-        }
         body {
-            background: radial-gradient(circle at top right, #1e293b, #0f172a);
-            color: #f8fafc;
-            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            padding-bottom: 50px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .vision-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            color: var(--primary-dark);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .header-section {
-            padding: 60px 0 40px;
-            text-align: center;
-        }
-        .header-section h1 {
-            font-weight: 800;
-            letter-spacing: -2px;
-            background: linear-gradient(to right, #fff, #94a3b8);
-            /* PERBAIKAN ERROR COMPATIBILITY DI SINI */
-            -webkit-background-clip: text;
-            background-clip: text; 
-            -webkit-text-fill-color: transparent;
-        }
-        .btn-vision {
-            background: var(--primary-dark);
-            color: white;
-            border-radius: 12px;
-            padding: 12px 30px;
-            font-weight: 600;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .main-card {
             border: none;
+            border-radius: 15px;
+            overflow: hidden;
         }
-        .btn-vision:hover {
-            background: #1e293b;
-            color: var(--accent-gold);
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        .card-header-custom {
+            background-color: #4e73df;
+            color: white;
+            font-weight: bold;
+            padding: 1.5rem;
         }
-        .table { color: var(--primary-dark); }
-        .table thead { background: #f1f5f9; }
-        .badge-vision {
-            background: #e2e8f0;
-            color: #475569;
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            padding: 6px 12px;
+        .btn-primary {
+            background-color: #4e73df;
+            border: none;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .table thead {
+            background-color: #4e73df;
+            color: white;
+        }
+        .badge-kategori {
+            padding: 0.5em 0.8em;
+            border-radius: 50px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header-section">
-            <h1 class="display-3 mb-2">SAKUKU <span style="color: #fbbf24;">F6</span></h1>
-            <p class="text-secondary opacity-75">Intelligence Financial Management System</p>
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-dark">💰 Sakuku 💰</h1>
+            <p class="text-muted">Kelola Keuangan dengan Lebih Efisien</p>
         </div>
-
-        <div class="card vision-card mb-5 border-0">
-            <div class="card-body p-4 p-lg-5">
-                <form action="/add" method="POST" class="row g-4">
+        
+        <div class="card main-card shadow mb-5">
+            <div class="card-header-custom">
+                <i class="bi bi-plus-circle"></i> Tambah Transaksi Baru
+            </div>
+            <div class="card-body p-4">
+                <form action="/add" method="POST" class="row g-3">
                     <div class="col-md-4">
-                        <label class="form-label small text-uppercase fw-bold text-muted">Nominal Allocation</label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-transparent border-end-0">Rp</span>
-                            <input type="number" name="nominal" class="form-control border-start-0 ps-0" placeholder="000.000" required>
-                        </div>
+                        <label class="form-label fw-bold">Nominal (Rp)</label>
+                        <input type="number" name="nominal" class="form-control" placeholder="Contoh: 50000" required>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label small text-uppercase fw-bold text-muted">Classification</label>
-                        <input type="text" name="nama_kategori" class="form-control" placeholder="Food, Tech, etc" required>
+                        <label class="form-label fw-bold">Kategori</label>
+                        <input type="text" name="nama_kategori" class="form-control" placeholder="Makan, Transport, dll" required>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label small text-uppercase fw-bold text-muted">Time Entry</label>
+                        <label class="form-label fw-bold">Tanggal</label>
                         <input type="date" name="tanggal" class="form-control" required>
                     </div>
                     <div class="col-md-8">
-                        <label class="form-label small text-uppercase fw-bold text-muted">Description Details</label>
-                        <input type="text" name="keterangan" class="form-control" placeholder="Specify your transaction details...">
+                        <label class="form-label fw-bold">Keterangan</label>
+                        <input type="text" name="keterangan" class="form-control" placeholder="Beli apa hari ini?">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label small text-uppercase fw-bold text-muted">Payment Framework</label>
+                        <label class="form-label fw-bold">Metode</label>
                         <select name="metode_pembayaran" class="form-select">
-                            <option value="Cash">Physical Cash</option>
-                            <option value="Bank/Transfer">Digital Transfer</option>
+                            <option value="Cash">Cash</option>
+                            <option value="Bank/Transfer">Bank/Transfer</option>
                         </select>
                     </div>
-                    <div class="col-12 text-end mt-5">
-                        <button type="submit" class="btn btn-vision px-5">EXECUTE ENTRY</button>
+                    <div class="col-12 mt-4 text-end">
+                        <button type="submit" class="btn btn-primary px-5 py-2 fw-bold shadow-sm">Simpan Transaksi</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <div class="card vision-card border-0 overflow-hidden">
-            <div class="table-responsive">
-                <table class="table table-hover mb-0 align-middle">
-                    <thead class="border-0">
-                        <tr class="text-muted small fw-bold text-uppercase">
-                            <th class="ps-4">Date</th>
-                            <th>Classification</th>
-                            <th>Amount</th>
-                            <th>Mode</th>
-                            <th>Notes</th>
-                            <th class="text-center pe-4">Operation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% if (data && data.length > 0) { %>
-                            <% data.forEach(item => { %>
-                            <tr style="border-bottom: 1px solid #f1f5f9;">
-                                <td class="ps-4 text-muted small"><%= item.tanggal %></td>
-                                <td><span class="badge badge-vision rounded-pill text-dark"><%= item.nama_kategori %></span></td>
-                                <td class="fw-bold">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
-                                <td class="small text-secondary"><%= item.metode_pembayaran %></td>
-                                <td class="small"><%= item.keterangan %></td>
-                                <td class="text-center pe-4">
-                                    <div class="btn-group gap-2">
-                                        <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-outline-dark border-0 rounded-circle" title="Edit Data" style="text-decoration: none;">✎</a>
-                                        <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-outline-danger border-0 rounded-circle" onclick="return confirm('Archive permanently?')" style="text-decoration: none;">✕</a>
-                                    </div>
-                                </td>
+        <div class="card main-card shadow">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Tanggal</th>
+                                <th>Kategori</th>
+                                <th>Nominal</th>
+                                <th>Metode</th>
+                                <th>Keterangan</th>
+                                <th>Aksi</th>
                             </tr>
-                            <% }) %>
-                        <% } else { %>
-                            <tr>
-                                <td colspan="6" class="text-center py-5 text-muted small italic">System status: No active records found.</td>
-                            </tr>
-                        <% } %>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="text-center align-middle">
+                            <% if (data && data.length > 0) { %>
+                                <% data.forEach(item => { %>
+                                <tr>
+                                    <td class="small"><%= item.tanggal %></td>
+                                    <td><span class="badge bg-info text-dark badge-kategori"><%= item.nama_kategori %></span></td>
+                                    <td class="fw-bold">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
+                                    <td><%= item.metode_pembayaran %></td>
+                                    <td class="text-muted italic small"><%= item.keterangan %></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')">Hapus</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="6" class="py-5 text-muted italic">Belum ada data transaksi.</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
