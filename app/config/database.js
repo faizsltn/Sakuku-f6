@@ -5,10 +5,10 @@ const db = mysql.createConnection({
     // PERBAIKAN: Gunakan nama service database sesuai di docker-compose.yml
     host: 'db_service', 
     // Gunakan user 'user' (bukan root) agar sinkron dengan init.sql
-    user: 'user', 
+    user: process.env.DB_USER, 
     // Password harus string 'password' sesuai konfigurasi .env Anda
-    password: 'password', 
-    database: 'sakuku_db'
+    password: process.env.DB_PASS, 
+    database: process.env.DB_NAME
 });
 
 db.connect((err) => {
