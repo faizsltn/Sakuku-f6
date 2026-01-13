@@ -9,14 +9,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // (R) READ: Mengambil data gabungan Pengeluaran & Kategori
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
     const query = `
         SELECT p.*, k.nama_kategori 
         FROM Pengeluaran p 
         LEFT JOIN Kategori k ON p.PengeluaranID = k.PengeluaranID
         ORDER BY p.tanggal DESC
     `;
-    db.query(query, (err, results) => {
+    await db.query(query, (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).send(err);
