@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sakuku - Elegant Light Edition</title>
+    <title>Sakuku - Elegant Edition</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-light: #eef2f7; 
+            --bg-light: #f4f7fa; 
             --card-white: #ffffff;
             --primary-blue: #0ea5e9;
             --accent-yellow: #fbbf24;
-            --text-dark: #1e293b;
+            --text-dark: #334155;
         }
 
         body {
@@ -20,136 +20,139 @@
             font-family: 'Poppins', sans-serif;
             color: var(--text-dark);
             min-height: 100vh;
-        }
-
-        /* Hero Section dengan Background Uang 50rb sesuai gambar */
-        .hero-section {
-            padding: 60px 0;
-            margin-bottom: 40px;
-            border-radius: 25px;
-            margin-top: 20px;
+            margin: 0;
+            overflow-x: hidden;
             position: relative;
-            overflow: hidden;
-            /* Gambar uang Rp50.000 dengan overlay cerah */
-            background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.5)), 
-                        url('https://images.unsplash.com/photo-1593672715438-d88a75639f24?q=80&w=2072&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        .section-tag {
-            background-color: var(--accent-yellow);
-            color: #000;
-            padding: 4px 15px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.75rem;
-            display: inline-block;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+        /* Container Animasi Uang Jatuh */
+        .money-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .money {
+            position: absolute;
+            width: 60px; /* Ukuran uang kertas */
+            height: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Hero Section sesuai gambar */
+        .hero-section {
+            padding: 50px 0;
+            text-align: center;
+            background: transparent;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .money-bag {
+            width: 60px; /* Ukuran ikon kantong uang */
+            height: auto;
         }
 
         .hero-title {
-            font-weight: 700;
-            font-size: 3rem;
-            color: #b45309; /* Warna coklat keemasan mirip teks Sakuku di gambar */
-            margin-bottom: 5px;
+            font-weight: 800;
+            font-size: 3.5rem;
+            color: #b45309; /* Warna cokelat sesuai gambar */
+            margin: 0;
         }
 
-        /* Desain Card Tambah Transaksi */
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #475569;
+            margin-top: 10px;
+        }
+
+        /* Desain Card */
         .organic-card {
             background: var(--card-white);
             border: none;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            border-top: 5px solid var(--accent-yellow);
         }
 
-        .form-label {
-            font-weight: 600;
-            color: var(--text-dark);
-            font-size: 0.9rem;
-        }
-
-        .form-control, .form-select {
-            border-radius: 10px;
-            border: 1px solid #cbd5e1;
-            padding: 10px;
-            background-color: #ffffff;
-        }
+        .form-label { font-weight: 600; font-size: 0.9rem; }
 
         .btn-organic {
             background-color: var(--accent-yellow);
             color: #000;
             border: none;
             border-radius: 10px;
-            padding: 10px 30px;
+            padding: 12px 35px;
             font-weight: 700;
             transition: 0.3s;
         }
 
         .btn-organic:hover {
             background-color: #f59e0b;
-            transform: translateY(-2px);
+            transform: scale(1.05);
         }
 
-        /* Styling Tabel Pengeluaran sesuai screenshot */
+        /* Tabel Pengeluaran */
         .table-container {
-            border-radius: 20px;
+            border-radius: 15px;
             overflow: hidden;
             background: var(--card-white);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-        }
-
-        .table-header-custom {
-            background-color: #334155; /* Warna gelap untuk header tabel */
-            color: #ffffff;
-            padding: 15px 25px;
-            font-weight: 700;
-        }
-
-        .table {
-            margin-bottom: 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
         .table thead th {
             background-color: #f8fafc;
             color: #64748b;
-            border-bottom: 2px solid #e2e8f0;
             padding: 15px;
-            font-size: 0.8rem;
             text-transform: uppercase;
-        }
-
-        .table tbody tr {
-            background-color: #ffffff;
-        }
-
-        .table tbody td {
-            padding: 15px;
-            border-bottom: 1px solid #f1f5f9;
-            vertical-align: middle;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
         }
 
         .badge-category {
             background-color: #fef3c7;
             color: #92400e;
-            padding: 5px 12px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 0.85rem;
         }
 
-        .btn-edit { background-color: #fbbf24; color: #000; border: none; }
-        .btn-hapus { background-color: #ef4444; color: #fff; border: none; }
+        .btn-edit { background-color: var(--accent-yellow); color: #000; border: none; font-weight: 600; }
+        .btn-hapus { background-color: #ef4444; color: #fff; border: none; font-weight: 600; }
+
     </style>
 </head>
 <body>
 
+    <div class="money-rain" id="moneyRain"></div>
+
     <div class="container">
-        <div class="hero-section text-center">
-            <h1 class="hero-title">💰 Sakuku 💰</h1>
-            <p class="fw-medium text-dark">Kelola Keuangan dengan Efisien</p>
+        <div class="hero-section">
+            <div class="hero-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" class="money-bag" alt="bag">
+                <h1 class="hero-title">Sakuku</h1>
+                <img src="https://cdn-icons-png.flaticon.com/512/2489/2489756.png" class="money-bag" alt="bag">
+            </div>
+            <p class="hero-subtitle">Kelola Keuangan dengan Efisien</p>
         </div>
 
         <div class="row justify-content-center mb-5">
@@ -181,7 +184,7 @@
                                     <option value="Bank/Transfer">Transfer Bank</option>
                                 </select>
                             </div>
-                            <div class="col-12 text-end mt-4">
+                            <div class="col-12 text-center mt-4">
                                 <button type="submit" class="btn btn-organic">Simpan Transaksi</button>
                             </div>
                         </form>
@@ -193,11 +196,11 @@
         <div class="row justify-content-center pb-5">
             <div class="col-lg-11">
                 <div class="table-container">
-                    <div class="table-header-custom">Riwayat Pengeluaran</div>
+                    <div class="p-3 fw-bold border-bottom bg-white">Riwayat Pengeluaran</div>
                     <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr class="text-center">
+                        <table class="table table-hover">
+                            <thead class="text-center">
+                                <tr>
                                     <th>Tanggal</th>
                                     <th>Kategori</th>
                                     <th>Nominal</th>
@@ -213,20 +216,18 @@
                                         <td class="small text-muted"><%= item.tanggal %></td>
                                         <td><span class="badge-category"><%= item.nama_kategori %></span></td>
                                         <td class="fw-bold">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
-                                        <td class="text-secondary"><%= item.metode_pembayaran %></td>
+                                        <td><%= item.metode_pembayaran %></td>
                                         <td class="text-muted"><%= item.keterangan %></td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-2">
-                                                <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-edit px-3">Edit</a>
-                                                <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-hapus px-3">Hapus</a>
+                                                <button class="btn btn-sm btn-edit px-3">Edit</button>
+                                                <button class="btn btn-sm btn-hapus px-3">Hapus</button>
                                             </div>
                                         </td>
                                     </tr>
                                     <% }) %>
                                 <% } else { %>
-                                    <tr>
-                                        <td colspan="6" class="py-5 text-muted italic">Belum ada data transaksi.</td>
-                                    </tr>
+                                    <tr><td colspan="6" class="py-5 text-muted">Belum ada data transaksi.</td></tr>
                                 <% } %>
                             </tbody>
                         </table>
@@ -235,5 +236,38 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const rainContainer = document.getElementById('moneyRain');
+        const moneyImages = [
+            'https://i.ibb.co/L6S8D7Y/uang-100rb.png', // Contoh link gambar uang 100rb
+            'https://i.ibb.co/yYyNfGq/uang-50rb.png'   // Contoh link gambar uang 50rb
+        ];
+
+        function createMoney() {
+            const money = document.createElement('div');
+            money.classList.add('money');
+            
+            // Pilih gambar acak (100rb atau 50rb)
+            const randomImg = moneyImages[Math.floor(Math.random() * moneyImages.length)];
+            money.style.backgroundImage = `url('${randomImg}')`;
+            
+            // Posisi horizontal acak
+            money.style.left = Math.random() * 100 + "vw";
+            
+            // Kecepatan jatuh acak
+            money.style.animationDuration = Math.random() * 3 + 2 + "s";
+            
+            rainContainer.appendChild(money);
+
+            // Hapus elemen setelah animasi selesai agar tidak membebani memori
+            setTimeout(() => {
+                money.remove();
+            }, 5000);
+        }
+
+        // Jalankan fungsi setiap 300ms
+        setInterval(createMoney, 300);
+    </script>
 </body>
 </html>
