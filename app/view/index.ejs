@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #f1f5f9; /* Background utama tetap putih keabuan */
+            background-color: #f1f5f9;
             font-family: 'Poppins', sans-serif;
             color: var(--text-dark);
             min-height: 100vh;
@@ -51,34 +51,38 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Hero Section - Diubah agar berbeda dengan background utama */
+        /* Hero Section - Dibuat Polos (Tanpa Background) agar Uang Jatuh Terlihat */
         .hero-section {
-            padding: 60px 0;
+            padding: 60px 0 30px 0;
             text-align: center;
-            /* Menggunakan warna gradien gelap yang elegan agar kontras dengan body */
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-            border-radius: 0 0 50px 50px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            margin-bottom: 40px;
+            background: transparent; /* Polos tanpa background */
+            margin-bottom: 20px;
             position: relative;
-            border-bottom: 4px solid var(--accent-yellow);
         }
 
+        /* Efek Timbul pada Tulisan Sakuku */
         .hero-title {
             font-weight: 800;
-            font-size: 3.5rem;
-            /* Warna teks dibuat cerah keemasan agar terbaca di background gelap */
-            color: var(--accent-yellow); 
+            font-size: 4.5rem;
+            color: #b45309;
             margin: 0;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            /* Efek Shadow agar Timbul */
+            text-shadow: 
+                0 1px 0 #92400e,
+                0 2px 0 #92400e,
+                0 3px 0 #92400e,
+                0 4px 0 #92400e,
+                0 10px 10px rgba(0, 0, 0, 0.3);
         }
         
         .hero-subtitle {
-            color: #cbd5e1; /* Warna abu-abu terang agar kontras */
+            color: var(--text-dark);
             font-weight: 600;
+            margin-top: 15px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
 
-        /* Desain Card */
+        /* Desain Card Tetap */
         .main-card {
             background: #ffffff;
             border: none;
@@ -109,10 +113,9 @@
             background-color: #f59e0b;
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4);
-            color: #000;
         }
 
-        /* Table Styling */
+        /* Table Styling Tetap */
         .table thead th {
             background-color: #f8fafc;
             color: #64748b;
@@ -230,8 +233,8 @@
     <script>
         const rainContainer = document.getElementById('moneyRain');
         const moneyImages = [
-            'https://cdn-icons-png.flaticon.com/512/2489/2489756.png', // Ikon kantong uang
-            'https://cdn-icons-png.flaticon.com/512/218/218381.png'    // Ikon uang kertas
+            'https://cdn-icons-png.flaticon.com/512/2489/2489756.png',
+            'https://cdn-icons-png.flaticon.com/512/218/218381.png'
         ];
 
         function createMoney() {
