@@ -5,56 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sakuku - Kelompok F6</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        :root {
+            --primary-blue: #0ea5e9;
+            --accent-yellow: #fbbf24;
+            --text-dark: #1e293b;
         }
+
+        body {
+            background-color: #f1f5f9;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Container Animasi Uang Jatuh */
+        .money-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .money {
+            position: absolute;
+            width: 50px;
+            height: 25px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            padding: 50px 0;
+            text-align: center;
+            /* Latar belakang gambar uang statis dengan overlay */
+            background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.8)), 
+                        url('https://images.unsplash.com/photo-1593672715438-d88a75639f24?q=80&w=2072&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border-radius: 0 0 50px 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        .hero-title {
+            font-weight: 800;
+            font-size: 3.5rem;
+            color: #b45309;
+            margin: 0;
+        }
+
+        /* Desain Card */
         .main-card {
+            background: #ffffff;
             border: none;
-            border-radius: 15px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
             overflow: hidden;
         }
+
         .card-header-custom {
-            background-color: #4e73df;
+            background-color: #334155;
             color: white;
-            font-weight: bold;
-            padding: 1.5rem;
-        }
-        .btn-primary {
-            background-color: #4e73df;
+            font-weight: 700;
+            padding: 1.2rem 1.5rem;
             border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-yellow);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            padding: 12px 35px;
+            font-weight: 700;
             transition: all 0.3s;
         }
+
         .btn-primary:hover {
-            background-color: #2e59d9;
+            background-color: #f59e0b;
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4);
+            color: #000;
         }
-        .table thead {
-            background-color: #4e73df;
-            color: white;
+
+        /* Table Styling */
+        .table thead th {
+            background-color: #f8fafc;
+            color: #64748b;
+            padding: 15px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #e2e8f0;
         }
+
         .badge-kategori {
-            padding: 0.5em 0.8em;
-            border-radius: 50px;
+            background-color: #fef3c7;
+            color: #92400e;
+            padding: 0.6em 1em;
+            border-radius: 8px;
+            font-weight: 600;
         }
+
+        .btn-warning { background-color: var(--accent-yellow); border: none; font-weight: 600; }
+        .btn-danger { background-color: #ef4444; border: none; font-weight: 600; }
+
     </style>
 </head>
 <body>
-    <div class="container py-5">
-        <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold text-dark">💰 Sakuku 💰</h1>
-            <p class="text-muted">Kelola Keuangan dengan Lebih Efisien</p>
+
+    <div class="money-rain" id="moneyRain"></div>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">💰 Sakuku 💰</h1>
+            <p class="text-muted fw-bold">Kelola Keuangan dengan Lebih Efisien</p>
         </div>
-        
+    </div>
+
+    <div class="container py-2">
         <div class="card main-card shadow mb-5">
             <div class="card-header-custom">
-                <i class="bi bi-plus-circle"></i> Tambah Transaksi Baru
+                Tambah Transaksi Baru
             </div>
             <div class="card-body p-4">
-                <form action="/add" method="POST" class="row g-3">
+                <form action="/add" method="POST" class="row g-4">
                     <div class="col-md-4">
                         <label class="form-label fw-bold">Nominal (Rp)</label>
                         <input type="number" name="nominal" class="form-control" placeholder="Contoh: 50000" required>
@@ -78,14 +171,14 @@
                             <option value="Bank/Transfer">Bank/Transfer</option>
                         </select>
                     </div>
-                    <div class="col-12 mt-4 text-end">
-                        <button type="submit" class="btn btn-primary px-5 py-2 fw-bold shadow-sm">Simpan Transaksi</button>
+                    <div class="col-12 mt-4 text-center">
+                        <button type="submit" class="btn btn-primary px-5">Simpan Transaksi</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <div class="card main-card shadow">
+        <div class="card main-card shadow mb-5">
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover mb-0">
@@ -104,21 +197,21 @@
                                 <% data.forEach(item => { %>
                                 <tr>
                                     <td class="small"><%= item.tanggal %></td>
-                                    <td><span class="badge bg-info text-dark badge-kategori"><%= item.nama_kategori %></span></td>
+                                    <td><span class="badge badge-kategori"><%= item.nama_kategori %></span></td>
                                     <td class="fw-bold">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
                                     <td><%= item.metode_pembayaran %></td>
                                     <td class="text-muted italic small"><%= item.keterangan %></td>
                                     <td>
-                                        <div class="btn-group">
-                                            <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-warning">Edit</a>
-                                            <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')">Hapus</a>
+                                        <div class="btn-group gap-2">
+                                            <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-warning rounded px-3">Edit</a>
+                                            <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-danger rounded px-3" onclick="return confirm('Hapus data ini?')">Hapus</a>
                                         </div>
                                     </td>
                                 </tr>
                                 <% }) %>
                             <% } else { %>
                                 <tr>
-                                    <td colspan="6" class="py-5 text-muted italic">Belum ada data transaksi.</td>
+                                    <td colspan="6" class="py-5 text-muted italic">Belum ada data transaksi tersimpan.</td>
                                 </tr>
                             <% } %>
                         </tbody>
@@ -127,5 +220,25 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const rainContainer = document.getElementById('moneyRain');
+        const moneyImages = [
+            'https://cdn-icons-png.flaticon.com/512/2489/2489756.png', // Ikon kantong uang
+            'https://cdn-icons-png.flaticon.com/512/218/218381.png'    // Ikon uang kertas
+        ];
+
+        function createMoney() {
+            const money = document.createElement('div');
+            money.classList.add('money');
+            const randomImg = moneyImages[Math.floor(Math.random() * moneyImages.length)];
+            money.style.backgroundImage = `url('${randomImg}')`;
+            money.style.left = Math.random() * 100 + "vw";
+            money.style.animationDuration = Math.random() * 3 + 2 + "s";
+            rainContainer.appendChild(money);
+            setTimeout(() => { money.remove(); }, 5000);
+        }
+        setInterval(createMoney, 300);
+    </script>
 </body>
 </html>
