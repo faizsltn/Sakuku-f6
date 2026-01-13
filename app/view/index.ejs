@@ -3,83 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sakuku - Catatan Keuangan Kelompok F6</title>
+    <title>Sakuku - Kelompok F6</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .main-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .card-header-custom {
+            background-color: #4e73df;
+            color: white;
+            font-weight: bold;
+            padding: 1.5rem;
+        }
+        .btn-primary {
+            background-color: #4e73df;
+            border: none;
+            transition: all 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #2e59d9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .table thead {
+            background-color: #4e73df;
+            color: white;
+        }
+        .badge-kategori {
+            padding: 0.5em 0.8em;
+            border-radius: 50px;
+        }
+    </style>
 </head>
-<body class="bg-light">
+<body>
     <div class="container py-5">
-        <h1 class="text-center mb-4">💰Sakuku💰</h1>
+        <div class="text-center mb-5">
+            <h1 class="display-4 fw-bold text-dark">💰 Sakuku 💰</h1>
+            <p class="text-muted">Kelola Keuangan Kelompok F6 dengan Lebih Mudah</p>
+        </div>
         
-        <div class="card shadow-sm mb-5">
-            <div class="card-body">
-                <h5 class="card-title">Tambah Pengeluaran Baru</h5>
+        <div class="card main-card shadow mb-5">
+            <div class="card-header-custom">
+                <i class="bi bi-plus-circle"></i> Tambah Transaksi Baru
+            </div>
+            <div class="card-body p-4">
                 <form action="/add" method="POST" class="row g-3">
                     <div class="col-md-4">
-                        <label class="form-label">Nominal</label>
-                        <input type="number" name="nominal" class="form-control" required>
+                        <label class="form-label fw-bold">Nominal (Rp)</label>
+                        <input type="number" name="nominal" class="form-control" placeholder="Contoh: 50000" required>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Kategori</label>
-                        <input type="text" name="nama_kategori" class="form-control" placeholder="Misal: Makan" required>
+                        <label class="form-label fw-bold">Kategori</label>
+                        <input type="text" name="nama_kategori" class="form-control" placeholder="Makan, Transport, dll" required>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Tanggal</label>
+                        <label class="form-label fw-bold">Tanggal</label>
                         <input type="date" name="tanggal" class="form-control" required>
                     </div>
                     <div class="col-md-8">
-                        <label class="form-label">Keterangan</label>
-                        <input type="text" name="keterangan" class="form-control">
+                        <label class="form-label fw-bold">Keterangan</label>
+                        <input type="text" name="keterangan" class="form-control" placeholder="Beli apa hari ini?">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Metode Pembayaran</label>
+                        <label class="form-label fw-bold">Metode</label>
                         <select name="metode_pembayaran" class="form-select">
                             <option value="Cash">Cash</option>
                             <option value="Bank/Transfer">Bank/Transfer</option>
                         </select>
                     </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary w-100">Simpan Transaksi</button>
+                    <div class="col-12 mt-4 text-end">
+                        <button type="submit" class="btn btn-primary px-5 py-2 fw-bold shadow-sm">Simpan Transaksi</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <div class="table-responsive">
-            <table class="table table-hover bg-white rounded shadow-sm">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Tanggal</th>
-                        <th>Kategori</th>
-                        <th>Nominal</th>
-                        <th>Metode</th>
-                        <th>Keterangan</th>
-                        <th class="text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% if (data && data.length > 0) { %>
-                        <% data.forEach(item => { %>
-                        <tr>
-                            <td><%= item.tanggal %></td>
-                            <td><span class="badge bg-info text-dark"><%= item.nama_kategori %></span></td>
-                            <td>Rp <%= item.nominal.toLocaleString('id-ID') %></td>
-                            <td><%= item.metode_pembayaran %></td>
-                            <td><%= item.keterangan %></td>
-                            <td class="text-center">
-                                <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="/delete/<%= item.PengeluaranID %>" 
-                                   class="btn btn-sm btn-danger" 
-                                   onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')">Hapus</a>
-                            </td>
-                        </tr>
-                        <% }) %>
-                    <% } else { %>
-                        <tr>
-                            <td colspan="6" class="text-center text-muted">Belum ada data transaksi.</td>
-                        </tr>
-                    <% } %>
-                </tbody>
-            </table>
+        <div class="card main-card shadow">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Tanggal</th>
+                                <th>Kategori</th>
+                                <th>Nominal</th>
+                                <th>Metode</th>
+                                <th>Keterangan</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center align-middle">
+                            <% if (data && data.length > 0) { %>
+                                <% data.forEach(item => { %>
+                                <tr>
+                                    <td class="small"><%= item.tanggal %></td>
+                                    <td><span class="badge bg-info text-dark badge-kategori"><%= item.nama_kategori %></span></td>
+                                    <td class="fw-bold">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
+                                    <td><%= item.metode_pembayaran %></td>
+                                    <td class="text-muted italic small"><%= item.keterangan %></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')">Hapus</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="6" class="py-5 text-muted italic">Belum ada data transaksi.</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </body>
