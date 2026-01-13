@@ -53,22 +53,31 @@
                         <th>Nominal</th>
                         <th>Metode</th>
                         <th>Keterangan</th>
-                        <th>Aksi</th>
+                        <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% data.forEach(item => { %>
-                    <tr>
-                        <td><%= item.tanggal %></td>
-                        <td><span class="badge bg-info text-dark"><%= item.nama_kategori %></span></td>
-                        <td>Rp <%= item.nominal %></td>
-                        <td><%= item.metode_pembayaran %></td>
-                        <td><%= item.keterangan %></td>
-                        <td>
-                            <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-danger">Hapus</a>
-                        </td>
-                    </tr>
-                    <% }) %>
+                    <% if (data && data.length > 0) { %>
+                        <% data.forEach(item => { %>
+                        <tr>
+                            <td><%= item.tanggal %></td>
+                            <td><span class="badge bg-info text-dark"><%= item.nama_kategori %></span></td>
+                            <td>Rp <%= item.nominal.toLocaleString('id-ID') %></td>
+                            <td><%= item.metode_pembayaran %></td>
+                            <td><%= item.keterangan %></td>
+                            <td class="text-center">
+                                <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="/delete/<%= item.PengeluaranID %>" 
+                                   class="btn btn-sm btn-danger" 
+                                   onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')">Hapus</a>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Belum ada data transaksi.</td>
+                        </tr>
+                    <% } %>
                 </tbody>
             </table>
         </div>
