@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
     db.query(query, (err, results) => {
         if (err) {
             console.error(err);
-            return res.status(500).send("Database Error");
+            return res.status(500).send("Database Error: ", err);
         }
         res.render('index', { data: results });
     });
