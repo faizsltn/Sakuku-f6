@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 const db = mysql.createPool({
@@ -14,12 +14,13 @@ const db = mysql.createPool({
     queueLimit: 0
 });
 
-db.connect((err) => {
-    if (err) {
-        console.error('Koneksi Database Gagal: ' + err.stack);
-        return;
-    }
-    console.log('Terhubung ke database MySQL Sakuku (Kelompok F6)');
-});
+db.getConnection()
+  .then((connection) => {
+    console.log("✅ Database connected successfully");
+    connection.release();
+  })
+  .catch((err) => {
+    console.error("❌ Database connection failed:", err.message);
+  });
 
 module.exports = db;
