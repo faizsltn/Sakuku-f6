@@ -34,7 +34,7 @@ app.get('/home',async (req, res) => {
             LEFT JOIN Kategori k ON p.PengeluaranID = k.PengeluaranID
             ORDER BY p.tanggal DESC
         `);
-        res.render("index", { messages: rows });
+        res.render("index", { data: rows });
       } catch (err) {
         console.error(err);
         res.render("index", { messages: [], error: "Database connection failed!" });
