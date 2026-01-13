@@ -25,16 +25,20 @@ app.get('/', async (req, res) => {
     });
 });
 
+app.get('/home', (req, res) => {
+    res.render('index')
+})
+
 // (C) CREATE: Menambah data ke tabel Pengeluaran lalu Kategori
-app.post('/add', (req, res) => {
+app.post('/add',async (req, res) => {
     const { nominal, keterangan, tanggal, metode_pembayaran, nama_kategori } = req.body;
     const q1 = "INSERT INTO Pengeluaran (nominal, keterangan, tanggal, metode_pembayaran) VALUES (?, ?, ?, ?)";
     
-    db.query(q1, [nominal, keterangan, tanggal, metode_pembayaran], (err, result) => {
+    await db.query(q1, [nominal, keterangan, tanggal, metode_pembayaran],async (err, result) => {
         if (err) return res.status(500).send(err);
         
         const q2 = "INSERT INTO Kategori (nama_kategori, PengeluaranID) VALUES (?, ?)";
-        db.query(q2, [nama_kategori, result.insertId], (err) => {
+        await db.query(q2, [nama_kategori, result.insertId], (err) => {
             if (err) return res.status(500).send(err);
             res.redirect('/');
         });
@@ -42,8 +46,8 @@ app.post('/add', (req, res) => {
 });
 
 // (D) DELETE: Menghapus data
-app.get('/delete/:id', (req, res) => {
-    db.query("DELETE FROM Pengeluaran WHERE PengeluaranID = ?", [req.params.id], (err) => {
+app.get('/delete/:id',async (req, res) => {
+    await db.query("DELETE FROM Pengeluaran WHERE PengeluaranID = ?", [req.params.id], (err) => {
         if (err) return res.status(500).send(err);
         res.redirect('/');
     });
