@@ -8,7 +8,10 @@ const db = mysql.createConnection({
     user: process.env.DB_USER, 
     // Password harus string 'password' sesuai konfigurasi .env Anda
     password: process.env.DB_PASS, 
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    waitForConnection: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
 db.connect((err) => {

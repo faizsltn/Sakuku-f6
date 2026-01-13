@@ -4,7 +4,7 @@ services:
   # --- 1. DATABASE SERVICE ---
   db_service:
     image: mysql:8.0
-    container_name: db_F6
+    container_name: db_${GROUP_NAME}
     restart: always
     environment:
       MYSQL_DATABASE: ${DB_NAME}
