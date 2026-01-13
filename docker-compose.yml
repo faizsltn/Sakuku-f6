@@ -20,7 +20,6 @@ services:
   # --- 2. APP SERVICE ---
   app_service:
     build: ./app
-    command: node index.js   # 👉 GANTI ke app.js jika file utamanya app.js
     container_name: app_${GROUP_NAME}
     restart: always
     expose:
