@@ -8,108 +8,121 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-light: #f1f5f9; /* Abu-abu sangat muda bersih */
+            --bg-light: #eef2f7; 
             --card-white: #ffffff;
-            --primary-accent: #0ea5e9; /* Biru cerah agar senada dengan uang 50rb */
-            --secondary-accent: #fbbf24; /* Kuning emas aksen */
-            --text-main: #1e293b;
-            --text-muted: #64748b;
+            --primary-blue: #0ea5e9;
+            --accent-yellow: #fbbf24;
+            --text-dark: #1e293b;
         }
 
         body {
             background-color: var(--bg-light);
             font-family: 'Poppins', sans-serif;
-            color: var(--text-main);
+            color: var(--text-dark);
             min-height: 100vh;
         }
 
-        /* Hero Section dengan Background Uang 50rb Cerah */
+        /* Hero Section dengan Background Uang 50rb sesuai gambar */
         .hero-section {
-            padding: 80px 0;
+            padding: 60px 0;
             margin-bottom: 40px;
-            border-radius: 0 0 50px 50px;
+            border-radius: 25px;
+            margin-top: 20px;
             position: relative;
             overflow: hidden;
-            /* Menggunakan gambar uang 50rb dengan overlay cerah */
-            background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.8)), 
+            /* Gambar uang Rp50.000 dengan overlay cerah */
+            background: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.5)), 
                         url('https://images.unsplash.com/photo-1593672715438-d88a75639f24?q=80&w=2072&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-tag {
+            background-color: var(--accent-yellow);
+            color: #000;
+            padding: 4px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
 
         .hero-title {
             font-weight: 700;
-            font-size: 3.5rem;
-            color: #0369a1; /* Biru pekat */
-            text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.8);
+            font-size: 3rem;
+            color: #b45309; /* Warna coklat keemasan mirip teks Sakuku di gambar */
+            margin-bottom: 5px;
         }
 
-        /* Desain Card Putih Bersih */
+        /* Desain Card Tambah Transaksi */
         .organic-card {
             background: var(--card-white);
             border: none;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
 
         .form-label {
             font-weight: 600;
-            color: var(--text-main);
+            color: var(--text-dark);
             font-size: 0.9rem;
         }
 
         .form-control, .form-select {
-            border-radius: 12px;
-            border: 1px solid #e2e8f0;
-            padding: 12px;
-            background-color: #f8fafc;
-            color: var(--text-main);
-        }
-
-        .form-control:focus {
-            border-color: var(--primary-accent);
-            box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.15);
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            padding: 10px;
+            background-color: #ffffff;
         }
 
         .btn-organic {
-            background-color: var(--primary-accent);
-            color: #fff;
+            background-color: var(--accent-yellow);
+            color: #000;
             border: none;
-            border-radius: 12px;
-            padding: 12px 35px;
+            border-radius: 10px;
+            padding: 10px 30px;
             font-weight: 700;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
         .btn-organic:hover {
+            background-color: #f59e0b;
             transform: translateY(-2px);
-            background-color: #0284c7;
-            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.3);
-            color: #fff;
         }
 
-        /* Styling Tabel Cerah */
+        /* Styling Tabel Pengeluaran sesuai screenshot */
         .table-container {
-            border-radius: 25px;
+            border-radius: 20px;
             overflow: hidden;
             background: var(--card-white);
-            padding: 25px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.07);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .table-header-custom {
+            background-color: #334155; /* Warna gelap untuk header tabel */
+            color: #ffffff;
+            padding: 15px 25px;
+            font-weight: 700;
         }
 
         .table {
-            color: var(--text-main);
+            margin-bottom: 0;
         }
 
         .table thead th {
-            background-color: #f1f5f9;
-            color: #0369a1;
-            border: none;
+            background-color: #f8fafc;
+            color: #64748b;
+            border-bottom: 2px solid #e2e8f0;
             padding: 15px;
-            font-weight: 700;
-            text-transform: uppercase;
             font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .table tbody tr {
+            background-color: #ffffff;
         }
 
         .table tbody td {
@@ -119,35 +132,32 @@
         }
 
         .badge-category {
-            background-color: #e0f2fe;
-            color: #0369a1;
-            padding: 6px 12px;
-            border-radius: 8px;
+            background-color: #fef3c7;
+            color: #92400e;
+            padding: 5px 12px;
+            border-radius: 6px;
             font-weight: 600;
+            font-size: 0.85rem;
         }
 
-        .btn-action {
-            border-radius: 8px;
-            font-weight: 600;
-        }
+        .btn-edit { background-color: #fbbf24; color: #000; border: none; }
+        .btn-hapus { background-color: #ef4444; color: #fff; border: none; }
     </style>
 </head>
 <body>
 
-    <div class="hero-section text-center">
-        <div class="container">
+    <div class="container">
+        <div class="hero-section text-center">
             <h1 class="hero-title">💰 Sakuku 💰</h1>
-            <p class="text-secondary fw-semibold">Kelola Keuangan dengan Elegan & Efisien</p>
+            <p class="fw-medium text-dark">Kelola Keuangan dengan Efisien</p>
         </div>
-    </div>
 
-    <div class="container py-2">
         <div class="row justify-content-center mb-5">
             <div class="col-lg-10">
                 <div class="card organic-card">
-                    <div class="card-body p-5">
-                        <h4 class="mb-4 fw-bold text-center" style="color: #0369a1;">Tambah Transaksi Baru</h4>
-                        <form action="/add" method="POST" class="row g-4">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">Tambah Transaksi Baru</h5>
+                        <form action="/add" method="POST" class="row g-3">
                             <div class="col-md-4">
                                 <label class="form-label">Nominal (Rp)</label>
                                 <input type="number" name="nominal" class="form-control" placeholder="50000" required>
@@ -171,8 +181,8 @@
                                     <option value="Bank/Transfer">Transfer Bank</option>
                                 </select>
                             </div>
-                            <div class="col-12 text-center mt-5">
-                                <button type="submit" class="btn btn-organic px-5">Simpan Transaksi</button>
+                            <div class="col-12 text-end mt-4">
+                                <button type="submit" class="btn btn-organic">Simpan Transaksi</button>
                             </div>
                         </form>
                     </div>
@@ -183,7 +193,7 @@
         <div class="row justify-content-center pb-5">
             <div class="col-lg-11">
                 <div class="table-container">
-                    <h4 class="mb-4 fw-bold" style="color: #0369a1;">Riwayat Pengeluaran</h4>
+                    <div class="table-header-custom">Riwayat Pengeluaran</div>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -202,20 +212,20 @@
                                     <tr>
                                         <td class="small text-muted"><%= item.tanggal %></td>
                                         <td><span class="badge-category"><%= item.nama_kategori %></span></td>
-                                        <td class="fw-bold text-dark">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
-                                        <td class="small text-secondary"><%= item.metode_pembayaran %></td>
+                                        <td class="fw-bold">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
+                                        <td class="text-secondary"><%= item.metode_pembayaran %></td>
                                         <td class="text-muted"><%= item.keterangan %></td>
                                         <td>
                                             <div class="d-flex justify-content-center gap-2">
-                                                <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-outline-warning btn-action text-dark">Edit</a>
-                                                <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-outline-danger btn-action" onclick="return confirm('Hapus data ini?')">Hapus</a>
+                                                <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-edit px-3">Edit</a>
+                                                <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-hapus px-3">Hapus</a>
                                             </div>
                                         </td>
                                     </tr>
                                     <% }) %>
                                 <% } else { %>
                                     <tr>
-                                        <td colspan="6" class="py-5 text-muted italic">Belum ada data transaksi tersimpan.</td>
+                                        <td colspan="6" class="py-5 text-muted italic">Belum ada data transaksi.</td>
                                     </tr>
                                 <% } %>
                             </tbody>
