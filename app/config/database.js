@@ -1,9 +1,9 @@
 const mysql = require('mysql2');
 require('dotenv').config();
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     // PERBAIKAN: Gunakan nama service database sesuai di docker-compose.yml
-    host: 'db_service', 
+    host: process.env.DB_HOST, 
     // Gunakan user 'user' (bukan root) agar sinkron dengan init.sql
     user: process.env.DB_USER, 
     // Password harus string 'password' sesuai konfigurasi .env Anda
