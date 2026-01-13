@@ -42,7 +42,7 @@ services:
     container_name: nginx_${GROUP_NAME}
     restart: always
     ports:
-      - "2586:80"
+      - "${APP_PORT}:80"
     depends_on:
       - app_service
     networks:
@@ -53,6 +53,10 @@ services:
 # --- VOLUMES AND NETWORKS ---
 volumes:
   db_data:
+    name: mysql_data_${GROUP_NAME}
+    driver: local
 
 networks:
   sakuku_net:
+    driver: bridge
+    name: net_tekser_${GROUP_NAME}
