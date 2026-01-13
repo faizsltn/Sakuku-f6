@@ -25,8 +25,20 @@ app.get('/', async (req, res) => {
     });
 });
 
-app.get('/home', (req, res) => {
-    res.render('index')
+app.get('/home',async (req, res) => {
+    try {
+        const [rows] = await db.query(
+            `
+            SELECT p.*, k.nama_kategori 
+            FROM Pengeluaran p 
+            LEFT JOIN Kategori k ON p.PengeluaranID = k.PengeluaranID
+            ORDER BY p.tanggal DESC
+        `);
+        res.render("index", { messages: rows });
+      } catch (err) {
+        console.error(err);
+        res.render("index", { messages: [], error: "Database connection failed!" });
+      }
 })
 
 // (C) CREATE: Menambah data ke tabel Pengeluaran lalu Kategori
