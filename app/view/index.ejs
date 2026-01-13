@@ -3,129 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sakuku - Kelompok F6</title>
+    <title>Sakuku - Organic Edition</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-organic: #FDF9F0;
+            --primary-accent: #FFD95A;
+            --secondary-accent: #C07F00;
+            --text-dark: #4C3D3D;
+            --card-white: #FFFFFF;
+        }
+
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-color: var(--bg-organic);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
             min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .main-card {
+
+        .hero-section {
+            padding: 60px 0 30px;
+            background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+        }
+
+        .hero-title {
+            font-weight: 700;
+            font-size: 3rem;
+            color: var(--secondary-accent);
+            text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+        }
+
+        /* Desain Card ala Organic UI */
+        .organic-card {
+            background: var(--card-white);
             border: none;
-            border-radius: 15px;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(192, 127, 0, 0.1);
             overflow: hidden;
+            border-bottom: 8px solid var(--primary-accent);
         }
-        .card-header-custom {
-            background-color: #4e73df;
-            color: white;
-            font-weight: bold;
-            padding: 1.5rem;
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.9rem;
         }
-        .btn-primary {
-            background-color: #4e73df;
+
+        .form-control, .form-select {
+            border-radius: 15px;
+            border: 2px solid #F1E5D1;
+            padding: 12px;
+            background-color: #FFFDF9;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-accent);
+            box-shadow: none;
+        }
+
+        /* Button Modern */
+        .btn-organic {
+            background-color: var(--primary-accent);
+            color: var(--text-dark);
             border: none;
-            transition: all 0.3s;
-        }
-        .btn-primary:hover {
-            background-color: #2e59d9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        .table thead {
-            background-color: #4e73df;
-            color: white;
-        }
-        .badge-kategori {
-            padding: 0.5em 0.8em;
             border-radius: 50px;
+            padding: 12px 35px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-organic:hover {
+            background-color: var(--secondary-accent);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(192, 127, 0, 0.2);
+        }
+
+        /* Styling Tabel */
+        .table-container {
+            border-radius: 30px;
+            overflow: hidden;
+            background: white;
+            padding: 20px;
+        }
+
+        .table thead th {
+            background-color: var(--primary-accent);
+            color: var(--text-dark);
+            border: none;
+            padding: 20px;
+            font-weight: 700;
+        }
+
+        .table tbody td {
+            padding: 20px;
+            border-bottom: 1px solid #F8F1E5;
+            vertical-align: middle;
+        }
+
+        .badge-category {
+            background-color: #E7F0DC;
+            color: #597445;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .btn-action {
+            border-radius: 10px;
+            font-weight: 600;
+            padding: 5px 15px;
+        }
+
+        /* Judul Section */
+        .section-tag {
+            background-color: var(--primary-accent);
+            color: var(--text-dark);
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
+
     <div class="container py-5">
-        <div class="text-center mb-5">
-            <h1 class="display-4 fw-bold text-dark">💰 Sakuku 💰</h1>
-            <p class="text-muted">Kelola Keuangan dengan Lebih Mudah</p>
+        <div class="hero-section text-center mb-5">
+            <span class="section-tag">KELOMPOK F6</span>
+            <h1 class="hero-title">💰 Sakuku 💰</h1>
+            <p class="text-muted">Kelola Keuangan dengan Gaya Lebih Organik & Segar</p>
         </div>
         
-        <div class="card main-card shadow mb-5">
-            <div class="card-header-custom">
-                <i class="bi bi-plus-circle"></i> Tambah Transaksi Baru
-            </div>
-            <div class="card-body p-4">
-                <form action="/add" method="POST" class="row g-3">
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Nominal (Rp)</label>
-                        <input type="number" name="nominal" class="form-control" placeholder="Contoh: 50000" required>
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-10">
+                <div class="card organic-card shadow">
+                    <div class="card-body p-5">
+                        <h4 class="mb-4 fw-bold">Tambah Transaksi</h4>
+                        <form action="/add" method="POST" class="row g-4">
+                            <div class="col-md-4">
+                                <label class="form-label">Nominal (Rp)</label>
+                                <input type="number" name="nominal" class="form-control" placeholder="50000" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Kategori</label>
+                                <input type="text" name="nama_kategori" class="form-control" placeholder="Makan, Main, dll" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Tanggal</label>
+                                <input type="date" name="tanggal" class="form-control" required>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label">Keterangan Singkat</label>
+                                <input type="text" name="keterangan" class="form-control" placeholder="Beli apa saja hari ini?">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Metode Pembayaran</label>
+                                <select name="metode_pembayaran" class="form-select">
+                                    <option value="Cash">Cash / Tunai</option>
+                                    <option value="Bank/Transfer">Transfer Bank</option>
+                                </select>
+                            </div>
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-organic">Simpan Transaksi</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Kategori</label>
-                        <input type="text" name="nama_kategori" class="form-control" placeholder="Makan, Transport, dll" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Tanggal</label>
-                        <input type="date" name="tanggal" class="form-control" required>
-                    </div>
-                    <div class="col-md-8">
-                        <label class="form-label fw-bold">Keterangan</label>
-                        <input type="text" name="keterangan" class="form-control" placeholder="Beli apa hari ini?">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label fw-bold">Metode</label>
-                        <select name="metode_pembayaran" class="form-select">
-                            <option value="Cash">Cash</option>
-                            <option value="Bank/Transfer">Bank/Transfer</option>
-                        </select>
-                    </div>
-                    <div class="col-12 mt-4 text-end">
-                        <button type="submit" class="btn btn-primary px-5 py-2 fw-bold shadow-sm">Simpan Transaksi</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
 
-        <div class="card main-card shadow">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr class="text-center">
-                                <th>Tanggal</th>
-                                <th>Kategori</th>
-                                <th>Nominal</th>
-                                <th>Metode</th>
-                                <th>Keterangan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center align-middle">
-                            <% if (data && data.length > 0) { %>
-                                <% data.forEach(item => { %>
-                                <tr>
-                                    <td class="small"><%= item.tanggal %></td>
-                                    <td><span class="badge bg-info text-dark badge-kategori"><%= item.nama_kategori %></span></td>
-                                    <td class="fw-bold">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
-                                    <td><%= item.metode_pembayaran %></td>
-                                    <td class="text-muted italic small"><%= item.keterangan %></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-warning">Edit</a>
-                                            <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')">Hapus</a>
-                                        </div>
-                                    </td>
+        <div class="row justify-content-center">
+            <div class="col-lg-11">
+                <div class="table-container shadow">
+                    <h4 class="mb-4 fw-bold p-3">Riwayat Pengeluaran</h4>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Tanggal</th>
+                                    <th>Kategori</th>
+                                    <th>Nominal</th>
+                                    <th>Metode</th>
+                                    <th>Keterangan</th>
+                                    <th>Aksi</th>
                                 </tr>
-                                <% }) %>
-                            <% } else { %>
-                                <tr>
-                                    <td colspan="6" class="py-5 text-muted italic">Belum ada data transaksi.</td>
-                                </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="text-center">
+                                <% if (data && data.length > 0) { %>
+                                    <% data.forEach(item => { %>
+                                    <tr>
+                                        <td class="small text-muted"><%= item.tanggal %></td>
+                                        <td><span class="badge-category"><%= item.nama_kategori %></span></td>
+                                        <td class="fw-bold text-dark">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
+                                        <td><span class="text-uppercase small fw-bold"><%= item.metode_pembayaran %></span></td>
+                                        <td class="text-muted"><%= item.keterangan %></td>
+                                        <td>
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-warning btn-action">Edit</a>
+                                                <a href="/delete/<%= item.PengeluaranID %>" class="btn btn-sm btn-danger btn-action" onclick="return confirm('Hapus data ini?')">Hapus</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="6" class="py-5 text-muted italic">Oops! Belum ada data transaksi tersimpan.</td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </body>
 </html>
