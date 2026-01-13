@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #f1f5f9;
+            background-color: #f1f5f9; /* Background utama tetap putih keabuan */
             font-family: 'Poppins', sans-serif;
             color: var(--text-dark);
             min-height: 100vh;
@@ -51,25 +51,31 @@
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Hero Section */
+        /* Hero Section - Diubah agar berbeda dengan background utama */
         .hero-section {
-            padding: 50px 0;
+            padding: 60px 0;
             text-align: center;
-            /* Latar belakang gambar uang statis dengan overlay */
-            background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.8)), 
-                        url('https://images.unsplash.com/photo-1593672715438-d88a75639f24?q=80&w=2072&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
+            /* Menggunakan warna gradien gelap yang elegan agar kontras dengan body */
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
             border-radius: 0 0 50px 50px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             margin-bottom: 40px;
+            position: relative;
+            border-bottom: 4px solid var(--accent-yellow);
         }
 
         .hero-title {
             font-weight: 800;
             font-size: 3.5rem;
-            color: #b45309;
+            /* Warna teks dibuat cerah keemasan agar terbaca di background gelap */
+            color: var(--accent-yellow); 
             margin: 0;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .hero-subtitle {
+            color: #cbd5e1; /* Warna abu-abu terang agar kontras */
+            font-weight: 600;
         }
 
         /* Desain Card */
@@ -137,7 +143,7 @@
     <div class="hero-section">
         <div class="container">
             <h1 class="hero-title">💰 Sakuku 💰</h1>
-            <p class="text-muted fw-bold">Kelola Keuangan dengan Lebih Efisien</p>
+            <p class="hero-subtitle">Kelola Keuangan dengan Lebih Efisien</p>
         </div>
     </div>
 
