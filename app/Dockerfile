@@ -2,7 +2,7 @@
 FROM node:18-alpine
 
 # Set direktori kerja
-WORKDIR /app
+WORKDIR /usr/drc/app
 
 # Copy file dependency
 COPY package*.json ./
