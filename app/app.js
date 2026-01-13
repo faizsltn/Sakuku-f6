@@ -8,31 +8,29 @@ app.set('views', path.join(__dirname, 'view'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/',async (req, res) => {
+// (R) READ: Menampilkan data gabungan Pengeluaran & Kategori
+app.get('/', async (req, res) => {
     try {
-        const [rows] = await db.query(
-            `
+        const [rows] = await db.query(`
             SELECT p.*, k.nama_kategori 
             FROM Pengeluaran p 
             LEFT JOIN Kategori k ON p.PengeluaranID = k.PengeluaranID
             ORDER BY p.tanggal DESC
         `);
         res.render("index", { data: rows });
-      } catch (err) {
+    } catch (err) {
         console.error(err);
-        res.render("index", { messages: [], error: "Database connection failed!" });
-      }
-})
+        res.status(500).send("Database connection failed!");
+    }
+});
 
-// (C) CREATE: Menambah data ke tabel Pengeluaran lalu Kategori
+// (C) CREATE: Menambah data baru ke dua tabel
 app.post('/add', async (req, res) => {
     const { nominal, keterangan, tanggal, metode_pembayaran, nama_kategori } = req.body;
     try {
-        // 1. Masukkan ke tabel Pengeluaran
         const q1 = "INSERT INTO Pengeluaran (nominal, keterangan, tanggal, metode_pembayaran) VALUES (?, ?, ?, ?)";
         const [result] = await db.query(q1, [nominal, keterangan, tanggal, metode_pembayaran]);
         
-        // 2. Gunakan insertId untuk tabel Kategori
         const q2 = "INSERT INTO Kategori (nama_kategori, PengeluaranID) VALUES (?, ?)";
         await db.query(q2, [nama_kategori, result.insertId]);
         
@@ -43,7 +41,50 @@ app.post('/add', async (req, res) => {
     }
 });
 
-// (D) DELETE: Menghapus data
+// (U) EDIT: Mengambil data lama untuk ditampilkan di form edit
+app.get('/edit/:id', async (req, res) => {
+    try {
+        const [rows] = await db.query(`
+            SELECT p.*, k.nama_kategori 
+            FROM Pengeluaran p 
+            LEFT JOIN Kategori k ON p.PengeluaranID = k.PengeluaranID
+            WHERE p.PengeluaranID = ?
+        `, [req.params.id]);
+        
+        if (rows.length > 0) {
+            res.render("edit", { item: rows[0] });
+        } else {
+            res.status(404).send("Data tidak ditemukan");
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Gagal mengambil data edit");
+    }
+});
+
+// (U) UPDATE: Menyimpan perubahan data ke database
+app.post('/update/:id', async (req, res) => {
+    const { nominal, keterangan, tanggal, metode_pembayaran, nama_kategori } = req.body;
+    const { id } = req.params;
+    try {
+        // Update tabel Pengeluaran
+        await db.query(`
+            UPDATE Pengeluaran 
+            SET nominal = ?, keterangan = ?, tanggal = ?, metode_pembayaran = ? 
+            WHERE PengeluaranID = ?
+        `, [nominal, keterangan, tanggal, metode_pembayaran, id]);
+        
+        // Update tabel Kategori
+        await db.query("UPDATE Kategori SET nama_kategori = ? WHERE PengeluaranID = ?", [nama_kategori, id]);
+        
+        res.redirect('/');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Gagal memperbarui data");
+    }
+});
+
+// (D) DELETE: Menghapus data (Otomatis menghapus kategori karena CASCADE)
 app.get('/delete/:id', async (req, res) => {
     try {
         const query = "DELETE FROM Pengeluaran WHERE PengeluaranID = ?";
