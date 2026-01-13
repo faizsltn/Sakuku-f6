@@ -1,7 +1,7 @@
-# import image node versi 18 alpine
+# Menggunakan node versi 18 alpine
 FROM node:18-alpine
 
-# Set direktori kerja di dalam container
+# Set direktori kerja
 WORKDIR /app
 
 # Copy file dependency
@@ -10,11 +10,11 @@ COPY package*.json ./
 # Install dependency
 RUN npm install
 
-# Copy seluruh source code aplikasi
+# Copy seluruh source code
 COPY . .
 
-# Expose port aplikasi (internal, bukan port browser)
+# Port internal aplikasi
 EXPOSE 3000
 
-# Jalankan aplikasi
-CMD ["node", "index.js"]
+# PERBAIKAN: Jalankan app.js sesuai kodingan Anda
+CMD ["node", "app.js"]
