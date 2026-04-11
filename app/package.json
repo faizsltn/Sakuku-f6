@@ -1,7 +1,7 @@
 {
-  "name": "tulis-menfess",
+  "name": "sakuku-f6",
   "version": "1.1.0",
-  "description": "Anonymous Confession Wall",
+  "description": "Sistem Manajemen Keuangan - Tugas Keamanan Siber",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -12,6 +12,7 @@
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
+    "express-session": "^1.18.0",
     "mysql2": "^3.6.1"
   },
   "devDependencies": {

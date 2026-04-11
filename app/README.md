@@ -1,70 +1,57 @@
-# 🧠 APP Directory (Backend Logic)
-
+💰 SAKUKU F6 - Backend Logic & Security
 Halo Challenger! 👋
-Folder ini adalah **"Dapur Pacu"** dari aplikasi kalian. Di sinilah semua logika Node.js, Express Routing, dan tampilan EJS kalian dibuat.
+Selamat datang di repositori Sakuku F6. Folder ini telah ditingkatkan dari sekadar CRUD biasa menjadi aplikasi yang memiliki standar keamanan User Authentication dan Session Management.
 
-## 📂 Penjelasan Struktur File & Folder
+📂 Penjelasan Struktur File Terbaru
+1. app.js (Main Entry Point & Security Logic)
+Fungsi: Pusat kendali aplikasi.
 
-Agar kodingan kalian rapi dan standar industri, patuhi fungsi file/folder berikut:
+Update Terbaru: - Express-Session: Sekarang menangani State Management agar user tidak perlu login berulang kali.
 
-### 1. `app.js` (Main Entry Point)
+Unified Logic: Menangani alur masuk/keluar user dan proteksi data pengeluaran.
 
-- **Fungsi:** Jantung aplikasi kalian. File ini yang pertama kali dijalankan oleh Node.js saat container nyala.
-- **Tugas Kalian:**
-  - Inisialisasi Express Framework.
-  - Setup Middleware (View Engine EJS, Folder Public, Body Parser).
-  - Panggil file-file dari folder `routes/`.
-  - Jalankan server dengan `app.listen()`.
+2. config/database.js
+Fungsi: Jembatan ke MySQL.
 
-### 2. `config/` (Database Connection)
+Status: Menggunakan mysql2/promise untuk mendukung fitur Async/Await agar aplikasi lebih cepat dan anti-lag.
 
-- **Fungsi:** Tempat menyimpan file konfigurasi koneksi ke database (MySQL).
-- **Rules:**
-  - Jangan pernah menulis _password_ database secara langsung (Hardcode) di sini.
-  - Gunakan `process.env.DB_PASS` untuk mengambil password dari environment variable.
+3. view/index.ejs (The Heart of UI)
+Fungsi: Tampilan dashboard yang adaptif.
 
-### 3. `routes/` (Traffic Controller)
+Fitur Baru: - Conditional Rendering: Tampilan berubah otomatis dari Form Login ke Dashboard utama jika variabel isLoggedIn bernilai true.
 
-- **Fungsi:** Tempat mengatur jalur URL (Endpoint).
-- **Tips:**
-  - Pisahkan logic routing. Misalnya: `index.js` untuk halaman utama, `api.js` untuk pemrosesan data JSON.
-  - Jangan taruh logic query SQL yang terlalu panjang di sini (kalau bisa pisah ke Controller/Model, tapi kalau simpel di sini juga oke).
+SweetAlert2 Integration: Logika konfirmasi penghapusan dan logout berada di sini untuk mencegah kesalahan user (Accidental Data Loss).
 
-### 4. `view/` (Frontend/UI)
+4. package.json
+Dependency Baru: express-session ditambahkan untuk mendukung fitur keamanan.
 
-- **Fungsi:** Tempat file `.ejs` (Template Engine).
-- **`view/partials/`:** Folder khusus untuk potongan UI yang dipakai berulang-ulang.
-  - Contoh: `navbar.ejs`, `footer.ejs`, `header.ejs`.
-  - _Kenapa?_ Biar kalau mau ganti menu navbar, cukup edit satu file aja, gak perlu edit semua halaman.
+🔒 Aspek Keamanan Siber (Untuk Laporan RTM)
+Aplikasi ini tidak hanya sekadar bisa input data, tapi sudah memperhatikan poin-poin berikut:
 
-### 5. `Dockerfile` (The Recipe)
+Authentication: Verifikasi kredensial user melalui tabel users di database.
 
-- **Fungsi:** Instruksi untuk Docker bagaimana cara membungkus (Build) aplikasi Node.js ini menjadi Image.
-- **Wajib Cek:** Pastikan `EXPOSE port` di dalamnya sesuai dengan port yang kalian set di `app.js` (Default: 3000).
+Authorization (Session): Memastikan hanya user yang memiliki sesi aktif yang bisa melihat dan mengelola data keuangan.
 
----
+Data Integrity: Menggunakan Prepared Statements pada semua query SQL (misal: [username, password]) untuk mencegah serangan SQL Injection.
 
-## 🚀 To-Do List di Folder Ini
+User Validation: Validasi nominal transaksi di sisi server untuk mencegah data korup atau negatif.
 
-1.  **Install Dependencies:**
-    Sebelum mulai ngoding, masuk ke folder ini via terminal dan jalankan:
+🚀 Cara Menjalankan (Environment Docker)
+Karena aplikasi ini sudah dibungkus Docker, kalian tidak perlu pusing soal npm install di laptop lokal. Cukup:
 
-    ```bash
-    npm install
-    ```
+Pastikan Docker Desktop aktif.
 
-    _(Ini akan membaca `package.json` dan menginstall library seperti express, mysql2, dotenv, dll)_.
+Buka terminal di root folder project.
 
-2.  **Coding Time:**
-    Silakan isi file-file kosong tersebut dengan logika aplikasi CRUD rancangan kelompok kalian.
+Jalankan perintah sakti:
 
-3.  **Testing Local:**
-    Bisa dicoba jalankan manual dulu dengan `npm run dev` (pastikan database lokal nyala) sebelum dibungkus ke Docker.
+Bash
+docker compose up --build
+Buka browser: http://localhost:2586
 
----
+⚠️ Peringatan Penting
+Credential Leak: Jangan mengubah password admin123 di init.sql tanpa melakukan docker compose down -v agar database ter-reset dengan password baru.
 
-## ⚠️ PERINGATAN KERAS
+Session Secret: Dalam lingkungan produksi, secret pada konfigurasi session di app.js harus menggunakan string yang sangat kompleks.
 
-- **PORT MATCHING:** Pastikan port yang ditulis di `app.js` (misal: 3000) **SAMA** dengan port yang kalian buka di `docker-compose.yml` dan `Dockerfile`. Kalau beda, container jalan tapi gak bisa diakses!
-
-*Happy Coding!* 💻
+Happy Coding & Stay Secure! 🛡️💻
