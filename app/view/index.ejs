@@ -6,235 +6,247 @@
     <title>Sakuku F6 - Unified Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --primary-blue: #0ea5e9;
-            --accent-yellow: #fbbf24;
-            --text-dark: #1e293b;
-            --slate-700: #334155;
+        :root { 
+            --primary-blue: #0ea5e9; 
+            --accent-yellow: #fbbf24; 
+            --text-dark: #1e293b; 
+            --dark-navy: #0f172a; /* Warna Navy Gelap Baru */
         }
 
-        body {
-            background-color: #f1f5f9;
-            font-family: 'Poppins', sans-serif;
-            color: var(--text-dark);
-            min-height: 100vh;
-            margin: 0;
+        body { 
+            background-color: #f1f5f9; 
+            font-family: 'Poppins', sans-serif; 
+            color: var(--text-dark); 
+            min-height: 100vh; 
+            margin: 0; 
             overflow-x: hidden;
             position: relative;
         }
 
-        /* Navbar Custom */
-        .navbar-custom {
-            background-color: var(--slate-700);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        /* Container Animasi Uang Jatuh */
+        /* 1. Lapisan Animasi Uang (Paling Belakang) */
         .money-rain {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: -1;
+            pointer-events: none; /* Mouse menembus lapisan ini */
+            z-index: 0; 
         }
 
         .money {
             position: absolute;
-            width: 50px;
-            height: 25px;
+            width: 40px;
+            height: 40px;
             background-size: contain;
             background-repeat: no-repeat;
-            opacity: 0.6;
-            animation: fall linear infinite;
+            opacity: 0.5;
+            animation: fall linear forwards;
         }
 
         @keyframes fall {
             0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.5; }
             100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Login Box Styling */
-        .login-box {
-            max-width: 400px;
-            margin: 10vh auto;
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            border: none;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            padding: 40px 0 20px 0;
-            text-align: center;
-            background: transparent;
+        /* 2. Navbar Custom (Dibuat sangat gelap & kontras) */
+        .navbar-custom {
+            background-color: var(--dark-navy) !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             position: relative;
+            z-index: 1000;
+            padding: 12px 0;
         }
 
-        .hero-title {
-            font-weight: 800;
-            font-size: 4rem;
-            color: #b45309;
-            margin: 0;
-            text-shadow: 0 1px 0 #92400e, 0 2px 0 #92400e, 0 3px 0 #92400e, 0 10px 10px rgba(0, 0, 0, 0.2);
+        .navbar-brand {
+            color: var(--accent-yellow) !important;
+            font-weight: 700;
+            font-size: 1.4rem;
         }
+
+        .navbar-text-custom {
+            color: #ffffff !important; /* Putih terang */
+        }
+
+        .navbar-text-custom strong {
+            color: var(--accent-yellow); /* Nama user jadi kuning */
+        }
+
+        /* 3. Lapisan Konten Utama */
+        .main-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-box { 
+            max-width: 400px; 
+            margin: 8vh auto; 
+            background: #ffffff; 
+            border-radius: 20px; 
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); 
+            border: none;
+            padding: 2.5rem;
+        }
+
+        .hero-title { font-weight: 800; font-size: 3.5rem; color: #b45309; text-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+        .main-card { background: #ffffff; border-radius: 20px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); overflow: hidden; }
+        .card-header-custom { background-color: var(--dark-navy); color: white; font-weight: 700; padding: 1.2rem; }
+        .btn-primary { background-color: var(--accent-yellow); color: #000; border: none; border-radius: 10px; font-weight: 700; }
+        .badge-kategori { background-color: #fef3c7; color: #92400e; padding: 0.5em 1em; border-radius: 8px; font-weight: 600; }
         
-        .hero-subtitle {
-            color: var(--text-dark);
-            font-weight: 600;
-            margin-top: 10px;
+        .admin-banner { 
+            background: #e0f2fe; 
+            border-radius: 15px; 
+            padding: 20px; 
+            margin-bottom: 30px; 
+            border-left: 6px solid var(--primary-blue);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .main-card {
-            background: #ffffff;
-            border: none;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-        }
-
-        .card-header-custom {
-            background-color: var(--slate-700);
-            color: white;
-            font-weight: 700;
-            padding: 1.2rem 1.5rem;
-            border: none;
-        }
-
-        .btn-primary {
-            background-color: var(--accent-yellow);
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            padding: 12px 35px;
-            font-weight: 700;
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            background-color: #f59e0b;
-            transform: translateY(-2px);
-        }
-
-        .table thead th {
-            background-color: #f8fafc;
-            color: #64748b;
-            padding: 15px;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .badge-kategori {
-            background-color: #fef3c7;
-            color: #92400e;
-            padding: 0.6em 1em;
-            border-radius: 8px;
-            font-weight: 600;
-        }
+        .clickable-link { cursor: pointer; text-decoration: none; transition: 0.2s; }
+        .clickable-link:hover { opacity: 0.7; text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <% if (!isLoggedIn) { %>
-        <div class="container">
-            <div class="card login-box p-4 mt-5">
-                <div class="text-center mb-4">
-                    <h2 class="fw-bold text-primary">SAKUKU F6</h2>
-                    <p class="text-muted small">Akses Sistem Manajemen Keuangan</p>
-                </div>
+    <div class="money-rain" id="moneyRain"></div>
 
-                <% if (error) { %>
-                    <div class="alert alert-danger py-2 text-center small"><%= error %></div>
+    <div class="main-content">
+        <% if (!isLoggedIn) { %>
+            <div class="container">
+                <div class="card login-box shadow">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold text-primary">SAKUKU F6</h2>
+                        <p class="text-muted small">Sistem Manajemen Keuangan</p>
+                    </div>
+
+                    <% if (error) { %><div class="alert alert-danger py-2 text-center small shadow-sm"><%= error %></div><% } %>
+                    <% if (success) { %><div class="alert alert-success py-2 text-center small shadow-sm"><%= success %></div><% } %>
+
+                    <form action="/login" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold small">Username atau Email</label>
+                            <input type="text" name="username" class="form-control" placeholder="admin@mail.com" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small">Password</label>
+                            <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100 py-2 fw-bold shadow-sm mb-3">Buka Dashboard</button>
+                    </form>
+
+                    <div class="text-center">
+                        <span class="clickable-link text-danger fw-bold small" data-bs-toggle="collapse" data-bs-target="#forgotArea">Lupa Password?</span> 
+                        <span class="mx-2 text-muted">|</span> 
+                        <span class="clickable-link text-primary fw-bold small" data-bs-toggle="collapse" data-bs-target="#registerArea">Daftar Akun Baru</span>
+                    </div>
+
+                    <div class="collapse mt-3" id="forgotArea">
+                        <div class="card card-body bg-light border-danger shadow-sm">
+                            <form action="/forgot-password" method="POST">
+                                <h6 class="fw-bold small text-danger mb-3">Reset Password</h6>
+                                <input type="email" name="email" class="form-control form-control-sm mb-2" placeholder="Email Terdaftar" required>
+                                <input type="text" name="answer" class="form-control form-control-sm mb-2" placeholder="Nama Ibu Kandung?" required>
+                                <input type="password" name="new_password" class="form-control form-control-sm mb-2" placeholder="Password Baru" required>
+                                <button type="submit" class="btn btn-danger btn-sm w-100 fw-bold">Update Password</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="collapse mt-3" id="registerArea">
+                        <div class="card card-body bg-light border-0 shadow-sm">
+                            <form action="/register" method="POST">
+                                <h6 class="fw-bold mb-3 small text-primary">Pendaftaran Baru</h6>
+                                <input type="text" name="username" class="form-control form-control-sm mb-2" placeholder="Username" required>
+                                <input type="email" name="email" class="form-control form-control-sm mb-2" placeholder="Email Aktif" required>
+                                <input type="password" name="password" class="form-control form-control-sm mb-2" placeholder="Password" required>
+                                <div class="p-2 border rounded bg-white mb-2 text-start">
+                                    <label class="small fw-bold text-muted d-block mb-1">Keamanan:</label>
+                                    <small class="d-block mb-1">Siapa nama ibu kandung Anda?</small>
+                                    <input type="text" name="security_answer" class="form-control form-control-sm" placeholder="Jawaban Rahasia" required>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-sm w-100 fw-bold">Daftar Akun</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <% } else { %>
+            <nav class="navbar navbar-dark navbar-custom px-4">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">
+                        <span class="me-2">💰</span>SAKUKU F6
+                    </a>
+                    <div class="d-flex align-items-center">
+                        <span class="navbar-text-custom me-3 small">
+                            Halo, <strong><%= username %></strong>
+                        </span>
+                        <button type="button" onclick="confirmLogout()" class="btn btn-outline-warning btn-sm rounded-pill px-3 fw-bold">Logout</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container py-4">
+                <% if (role === 'admin') { %>
+                    <div class="admin-banner d-flex justify-content-between align-items-center shadow-sm">
+                        <div>
+                            <h6 class="fw-bold mb-0 text-primary">Monitoring Global Admin</h6>
+                            <small class="text-muted">Total seluruh transaksi sistem.</small>
+                        </div>
+                        <div class="text-end">
+                            <h5 class="fw-bold mb-0 text-dark">Rp <%= totalSistem.toLocaleString('id-ID') %></h5>
+                        </div>
+                    </div>
                 <% } %>
 
-                <form action="/login" method="POST">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold small">Username</label>
-                        <input type="text" name="username" class="form-control" placeholder="admin" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label fw-bold small">Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="••••••••" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Buka Dashboard</button>
-                </form>
-            </div>
-        </div>
-
-    <% } else { %>
-        <nav class="navbar navbar-dark navbar-custom px-4 py-2">
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold" href="/">💰 SAKUKU F6</a>
-                <div class="d-flex align-items-center">
-                    <span class="text-light me-3 small">Halo, Admin</span>
-                    <button type="button" onclick="confirmLogout()" class="btn btn-outline-warning btn-sm rounded-pill px-3">Logout</button>
+                <div class="text-center mb-5">
+                    <h1 class="hero-title">Sakuku</h1>
+                    <p class="hero-subtitle text-muted">Kelola Keuangan dengan Lebih Efisien</p>
                 </div>
-            </div>
-        </nav>
 
-        <div class="money-rain" id="moneyRain"></div>
-
-        <div class="hero-section">
-            <div class="container">
-                <h1 class="hero-title">Sakuku</h1>
-                <p class="hero-subtitle">Kelola Keuangan dengan Lebih Efisien</p>
-            </div>
-        </div>
-
-        <div class="container py-2">
-            <div class="search-container mx-auto mb-4" style="max-width: 500px;">
-                <form action="/" method="GET" class="input-group shadow-sm">
-                    <input type="text" name="search" class="form-control rounded-start-pill ps-4" 
-                           placeholder="Cari transaksi..." value="<%= search %>">
-                    <button class="btn btn-primary rounded-end-pill px-4" type="submit">Cari</button>
-                </form>
-            </div>
-
-            <div class="card main-card shadow mb-5">
-                <div class="card-header-custom">Tambah Transaksi Baru</div>
-                <div class="card-body p-4">
-                    <form action="/add" method="POST" class="row g-4">
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold small">Nominal (Rp)</label>
-                            <input type="number" name="nominal" class="form-control" placeholder="50000" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold small">Kategori</label>
-                            <input type="text" name="nama_kategori" class="form-control" placeholder="Makan, Transport, dll" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold small">Tanggal</label>
-                            <input type="date" name="tanggal" class="form-control" required>
-                        </div>
-                        <div class="col-md-8">
-                            <label class="form-label fw-bold small">Keterangan</label>
-                            <input type="text" name="keterangan" class="form-control" placeholder="Beli apa hari ini?">
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold small">Metode</label>
-                            <select name="metode_pembayaran" class="form-select">
-                                <option value="Cash">Cash</option>
-                                <option value="Bank/Transfer">Bank/Transfer</option>
-                            </select>
-                        </div>
-                        <div class="col-12 mt-4 text-center">
-                            <button type="submit" class="btn btn-primary px-5 shadow-sm">Simpan Transaksi</button>
-                        </div>
-                    </form>
+                <div class="card main-card shadow-sm mb-5">
+                    <div class="card-header-custom text-center">Tambah Transaksi Baru</div>
+                    <div class="card-body p-4">
+                        <form action="/add" method="POST" class="row g-4 text-start">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small">Nominal (Rp)</label>
+                                <input type="number" name="nominal" class="form-control" placeholder="50000" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small">Kategori</label>
+                                <input type="text" name="nama_kategori" class="form-control" placeholder="Makan" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small">Tanggal</label>
+                                <input type="date" name="tanggal" class="form-control" required>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold small">Keterangan</label>
+                                <input type="text" name="keterangan" class="form-control" placeholder="Beli apa hari ini?">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small">Metode</label>
+                                <select name="metode_pembayaran" class="form-select">
+                                    <option value="Cash">Cash</option>
+                                    <option value="Bank/Transfer">Bank/Transfer</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mt-4 text-center">
+                                <button type="submit" class="btn btn-primary px-5 shadow-sm">Simpan Transaksi</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-            <div class="card main-card shadow mb-5">
-                <div class="card-body p-0">
+                <div class="card main-card shadow-sm">
                     <div class="table-responsive">
-                        <table class="table table-hover mb-0">
-                            <thead>
-                                <tr class="text-center">
+                        <table class="table table-hover mb-0 align-middle">
+                            <thead class="text-center">
+                                <tr>
                                     <th>Tanggal</th>
                                     <th>Kategori</th>
                                     <th>Nominal</th>
@@ -243,98 +255,74 @@
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="text-center align-middle">
+                            <tbody class="text-center">
                                 <% if (data && data.length > 0) { %>
                                     <% data.forEach(item => { %>
                                     <tr>
-                                        <td class="small">
-                                            <%= (item.tanggal instanceof Date) ? item.tanggal.toLocaleDateString('id-ID') : item.tanggal %>
-                                        </td>
-                                        <td><span class="badge badge-kategori"><%= item.nama_kategori %></span></td>
-                                        <td class="fw-bold text-dark">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
+                                        <td class="small"><%= (item.tanggal instanceof Date) ? item.tanggal.toLocaleDateString('id-ID') : item.tanggal %></td>
+                                        <td><span class="badge badge-kategori text-dark"><%= item.nama_kategori %></span></td>
+                                        <td class="fw-bold">Rp <%= item.nominal.toLocaleString('id-ID') %></td>
                                         <td><%= item.metode_pembayaran %></td>
-                                        <td class="text-muted italic small"><%= item.keterangan %></td>
+                                        <td class="text-muted small italic"><%= item.keterangan %></td>
                                         <td>
                                             <div class="btn-group gap-2">
-                                                <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-outline-warning rounded px-3">Edit</a>
-                                                <button type="button" class="btn btn-sm btn-outline-danger rounded px-3" 
-                                                        onclick="confirmDelete('<%= item.PengeluaranID %>')">
-                                                    Hapus
-                                                </button>
+                                                <a href="/edit/<%= item.PengeluaranID %>" class="btn btn-sm btn-outline-warning px-3 rounded">Edit</a>
+                                                <button onclick="confirmDelete('<%= item.PengeluaranID %>')" class="btn btn-sm btn-outline-danger px-3 rounded">Hapus</button>
                                             </div>
                                         </td>
                                     </tr>
                                     <% }) %>
                                 <% } else { %>
-                                    <tr>
-                                        <td colspan="6" class="py-5 text-muted italic">Tidak ada data ditemukan.</td>
-                                    </tr>
+                                    <tr><td colspan="6" class="py-5 text-muted">Belum ada transaksi.</td></tr>
                                 <% } %>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-        </div>
+        <% } %>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        <script>
-            // Fungsi Konfirmasi Logout
-            function confirmLogout() {
-                Swal.fire({
-                    title: 'Ingin keluar?',
-                    text: "Sesi Anda akan berakhir dan harus login kembali.",
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#fbbf24',
-                    cancelButtonColor: '#64748b',
-                    confirmButtonText: 'Ya, Logout!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "/logout";
-                    }
-                })
-            }
-
-            // Fungsi Konfirmasi Hapus
-            function confirmDelete(id) {
-                Swal.fire({
-                    title: 'Apakah Anda yakin?',
-                    text: "Data pengeluaran ini akan dihapus permanen!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#ef4444',
-                    cancelButtonColor: '#64748b',
-                    confirmButtonText: 'Ya, Hapus!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "/delete/" + id;
-                    }
-                })
-            }
-
-            // Animasi Uang Jatuh
+    <script>
+        // Logika Animasi Uang
+        function createMoney() {
             const rainContainer = document.getElementById('moneyRain');
+            if (!rainContainer) return;
+
+            const money = document.createElement('div');
+            money.classList.add('money');
+            
             const moneyImages = [
                 'https://cdn-icons-png.flaticon.com/512/2489/2489756.png',
                 'https://cdn-icons-png.flaticon.com/512/218/218381.png'
             ];
 
-            function createMoney() {
-                const money = document.createElement('div');
-                money.classList.add('money');
-                const randomImg = moneyImages[Math.floor(Math.random() * moneyImages.length)];
-                money.style.backgroundImage = `url('${randomImg}')`;
-                money.style.left = Math.random() * 100 + "vw";
-                money.style.animationDuration = Math.random() * 3 + 2 + "s";
-                if (rainContainer) rainContainer.appendChild(money);
-                setTimeout(() => { money.remove(); }, 5000);
-            }
-            setInterval(createMoney, 300);
-        </script>
-    <% } %>
+            money.style.backgroundImage = `url('${moneyImages[Math.floor(Math.random() * moneyImages.length)]}')`;
+            money.style.left = Math.random() * 100 + "vw";
+            money.style.animationDuration = Math.random() * 3 + 2 + "s";
+            
+            rainContainer.appendChild(money);
+            setTimeout(() => { money.remove(); }, 5000);
+        }
+
+        if (document.getElementById('moneyRain')) {
+            setInterval(createMoney, 400);
+        }
+
+        function confirmLogout() {
+            Swal.fire({
+                title: 'Ingin keluar?', icon: 'question', showCancelButton: true, confirmButtonColor: '#fbbf24', confirmButtonText: 'Ya, Logout!'
+            }).then((result) => { if (result.isConfirmed) window.location.href = "/logout"; })
+        }
+
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Hapus data?', text: "Data akan hilang permanen!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#ef4444', confirmButtonText: 'Ya, Hapus!'
+            }).then((result) => { if (result.isConfirmed) window.location.href = "/delete/" + id; })
+        }
+    </script>
 </body>
 </html>

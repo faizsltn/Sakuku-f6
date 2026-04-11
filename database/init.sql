@@ -1,23 +1,30 @@
+-- =============================================
+-- DATABASE SAKUKU F6 - 
+-- =============================================
+
 -- Membuat Database jika belum ada
 CREATE DATABASE IF NOT EXISTS sakuku_db;
 USE sakuku_db;
 
 -- =============================================
--- 1. TABEL USER (Untuk Keamanan & Login)
+-- 1. TABEL USER (Identity Management & Recovery)
 -- =============================================
+-- Menambahkan kolom security_answer untuk fitur Lupa Password
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
+    security_answer VARCHAR(255) NOT NULL, -- Nama Ibu Kandung
     role ENUM('admin', 'customer') DEFAULT 'customer'
 );
 
--- Data Akun untuk Login
--- User: admin, Pass: admin123
--- User: zahwa, Pass: zahwa123 (Sesuai nama partner di tugasmu)
-INSERT IGNORE INTO users (username, password, role) VALUES 
-('admin', 'admin123', 'admin'),
-('zahwa', 'zahwa123', 'customer');
+-- Data Akun Default untuk Simulasi
+-- Admin: Jawaban Keamanan "aminah"
+-- Faiz: Jawaban Keamanan "siti"
+INSERT IGNORE INTO users (username, email, password, security_answer, role) VALUES 
+('admin', 'admin@sakuku.com', 'admin123', 'aminah', 'admin'),
+('faiz', 'faiz@mail.com', 'faiz123', 'siti', 'customer');
 
 -- =============================================
 -- 2. TABEL UTAMA: Pengeluaran
@@ -43,7 +50,7 @@ CREATE TABLE IF NOT EXISTS Kategori (
 );
 
 -- =============================================
--- DATA DUMMY AWAL (UNTUK DEMO)
+-- DATA DUMMY AWAL (UNTUK DEMO SISTEM)
 -- =============================================
 INSERT IGNORE INTO Pengeluaran (PengeluaranID, nominal, keterangan, tanggal, metode_pembayaran) VALUES
 (1, 25000, 'Makan siang', '2026-01-01', 'Cash'),
