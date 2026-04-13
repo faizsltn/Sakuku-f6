@@ -4,8 +4,11 @@ const app = express();
 const path = require('path');
 const db = require('./config/database');
 
+// View Engine Setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'view'));
+
+// Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -17,7 +20,7 @@ app.use(session({
     cookie: { maxAge: 3600000 } 
 }));
 
-// Middleware: Proteksi Login
+// Middleware: Proteksi Route (Hanya bisa diakses jika sudah login)
 const isAuth = (req, res, next) => {
     if (req.session.isLoggedIn) {
         next();
@@ -32,6 +35,7 @@ const isAuth = (req, res, next) => {
 app.get('/', async (req, res) => {
     const search = req.query.search || '';
     try {
+        // Query ambil data transaksi (User Biasa & Admin bisa lihat datanya sendiri/semua sesuai query ini)
         const [rows] = await db.query(`
             SELECT p.*, k.nama_kategori 
             FROM Pengeluaran p 
@@ -44,7 +48,7 @@ app.get('/', async (req, res) => {
         const userRole = req.session.role || 'customer';
         const userName = req.session.username || '';
 
-        // FITUR EKSKLUSIF ADMIN: Monitoring Total Pengeluaran Seluruh Sistem
+        // FITUR EKSKLUSIF ADMIN: Monitoring Total Pengeluaran Seluruh Database
         let totalSistem = 0;
         if (statusLogin && userRole === 'admin') {
             const [totalRows] = await db.query("SELECT SUM(nominal) as total FROM Pengeluaran");
@@ -85,14 +89,14 @@ app.post('/register', async (req, res) => {
             [username, email, password, security_answer]
         );
 
-        res.redirect('/?success=Pendaftaran berhasil! Gunakan nama ibu untuk reset password.');
+        res.redirect('/?success=Pendaftaran berhasil! Silakan login.');
     } catch (err) {
         console.error(err);
-        res.status(500).send("Gagal mendaftar user");
+        res.redirect('/?error=Gagal mendaftar user');
     }
 });
 
-// Fitur Login (Username atau Email)
+// Fitur Login (Mendukung Username atau Email)
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -110,7 +114,7 @@ app.post('/login', async (req, res) => {
             res.redirect('/?error=Username/Email atau Password salah!');
         }
     } catch (err) {
-        res.status(500).send("Gagal proses login");
+        res.redirect('/?error=Terjadi kesalahan sistem saat login');
     }
 });
 
@@ -127,10 +131,10 @@ app.post('/forgot-password', async (req, res) => {
             await db.query("UPDATE users SET password = ? WHERE email = ?", [new_password, email]);
             res.redirect('/?success=Password berhasil direset! Silakan login.');
         } else {
-            res.redirect('/?error=Email atau Nama Ibu Kandung salah!');
+            res.redirect('/?error=Email atau Jawaban Keamanan salah!');
         }
     } catch (err) {
-        res.status(500).send("Gagal reset password");
+        res.redirect('/?error=Gagal reset password');
     }
 });
 
@@ -140,13 +144,13 @@ app.get('/logout', (req, res) => {
 });
 
 // ==========================================
-// 3. FITUR CRUD (UNTUK SEMUA USER LOGIN)
+// 3. FITUR CRUD (PROTECTED BY ISAUTH)
 // ==========================================
 
 // Tambah Transaksi
 app.post('/add', isAuth, async (req, res) => {
     const { nominal, keterangan, tanggal, metode_pembayaran, nama_kategori } = req.body;
-    if (!nominal || nominal <= 0) return res.send("<script>alert('Nominal harus valid!'); window.location='/';</script>");
+    if (!nominal || nominal <= 0) return res.send("<script>alert('Nominal tidak valid!'); window.location='/';</script>");
 
     try {
         const [result] = await db.query("INSERT INTO Pengeluaran (nominal, keterangan, tanggal, metode_pembayaran) VALUES (?, ?, ?, ?)", [nominal, keterangan, tanggal, metode_pembayaran]);
@@ -158,7 +162,7 @@ app.post('/add', isAuth, async (req, res) => {
     }
 });
 
-// Halaman Edit
+// Halaman Edit (Tampilan form edit)
 app.get('/edit/:id', isAuth, async (req, res) => {
     try {
         const [rows] = await db.query(`
@@ -174,7 +178,7 @@ app.get('/edit/:id', isAuth, async (req, res) => {
             res.status(404).send("Data tidak ditemukan");
         }
     } catch (err) {
-        res.status(500).send("Error memuat data edit");
+        res.status(500).send("Error memuat data");
     }
 });
 
@@ -193,9 +197,12 @@ app.post('/update/:id', isAuth, async (req, res) => {
 // Hapus Transaksi
 app.get('/delete/:id', isAuth, async (req, res) => {
     try {
+        // Hapus kategori dulu jika tidak pakai ON DELETE CASCADE di SQL
+        await db.query("DELETE FROM Kategori WHERE PengeluaranID = ?", [req.params.id]);
         await db.query("DELETE FROM Pengeluaran WHERE PengeluaranID = ?", [req.params.id]);
         res.redirect('/');
     } catch (err) {
+        console.error(err);
         res.status(500).send("Gagal menghapus data");
     }
 });
